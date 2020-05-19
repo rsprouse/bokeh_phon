@@ -9,9 +9,9 @@ class AudioPlot(Figure):
     '''
 A mono waveform plot and associated callbacks for client-side audio playback.
 
-The `js_playwin_cb`, `js_playsel_cb`, and `js_playall_cb` play portions of
+The `js_playxr_cb`, `js_playsel_cb`, and `js_playall_cb` play portions of
 the plot data via javascript based on current plot attributes--the data in
-the currently displayed axis window, the currently selected indices, or all
+the currently displayed x range, the currently selected indices, or all
 data, respectively.
 
 The `range_sel_cb` callback is a Python callback for changing the background
@@ -157,7 +157,7 @@ TODO: figure out why model attributes are not available in js.
     selbox = Any
     js_playall_cb = Any
     js_playsel_cb = Any
-    js_playwin_cb = Any
+    js_playxr_cb = Any
 
     def range_sel_cb(self, attr, old, new):
         '''Handle data range selection event.''' 
@@ -214,7 +214,7 @@ TODO: figure out why model attributes are not available in js.
     }
 '''
         )
-        self.js_playwin_cb = CustomJS(
+        self.js_playxr_cb = CustomJS(
             args=dict(plot=self, fs=self.fs, xcol=self.xcol, ycol=self.ycol),
             code='''
     const data = plot.renderers[0].data_source.data[ycol]
