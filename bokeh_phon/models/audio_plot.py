@@ -39,11 +39,10 @@ Examples
 ```python
 from bokeh_phon.models.audio_plot import AudioPlot
 from bokeh.models import Button
-from bokeh.io import show
+from bokeh.io import show, output_notebook
 from bokeh.layouts import column
 import parselmouth
 import numpy as np
-
 output_notebook()
 
 def myapp(doc):
@@ -51,7 +50,9 @@ def myapp(doc):
     ap = AudioPlot(
         samples=np.squeeze(snd.values),
         fs=snd.sampling_frequency,
-        plot_height=200,    # passed to Figure()
+        # Remaining arguments are passed to Figure().
+        plot_height=200,
+        toolbar_location='left'
     )
     playbtn = Button(label='Play all')
     playbtn.js_on_event('button_click', ap.js_playall_cb)
@@ -152,7 +153,7 @@ TODO: figure out why model attributes are not available in js.
     fs = Float
     xcol = String('times')
     ycol = String('samples')
-    samples = Any
+    wav = Any
     selbox = Any
     js_playall_cb = Any
     js_playsel_cb = Any
