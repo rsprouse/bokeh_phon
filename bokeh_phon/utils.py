@@ -1,4 +1,6 @@
 # Utility functions
+import os
+import urllib
 
 def remote_jupyter_proxy_url(port):
     """
