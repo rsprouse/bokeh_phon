@@ -1,4 +1,4 @@
-from bokeh.models import BoxAnnotation, ColumnDataSource, CustomJS
+from bokeh.models import BoxAnnotation, ColumnDataSource, CustomJS, ResetTool
 from bokeh.plotting import Figure
 from bokeh.core.properties import Any, Float, String
 from bokeh.util.compiler import TypeScript
@@ -162,14 +162,19 @@ TODO: figure out why model attributes are not available in js.
     def range_sel_cb(self, attr, old, new):
         '''Handle data range selection event.''' 
         a = np.array(new)
-        self.selbox.left = a.min() / self.fs
-        self.selbox.right = a.max() / self.fs
-        self.selbox.visible = True
+        try:
+            self.selbox.left = a.min() / self.fs
+            self.selbox.right = a.max() / self.fs
+            self.selbox.visible = True
+        except ValueError:
+            self.selbox.left = 0.0
+            self.selbox.right = 0.0
+            self.selbox.visible = False
 
     def __init__(self, samples=None, fs=None, *arg, **kwarg):
         if 'tools' not in kwarg:
             kwarg['tools'] = [
-                'xbox_zoom', 'xbox_select', 'xwheel_zoom', 'xwheel_pan', 'reset'
+                'xbox_zoom', 'xbox_select', 'xpan', 'reset'
             ]
         kwopts = {
             'toolbar_location': 'above'
