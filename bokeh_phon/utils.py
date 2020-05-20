@@ -2,7 +2,16 @@
 import os
 import urllib
 
-def remote_jupyter_proxy_url(port):
+# The most frequent external url when launching from mybinder.org.
+# This variable is defined here so that it is available to the
+# remote_jupyter_proxy_url_callback function. The caller does not
+# provide for a url param.
+default_url = 'https://hub.gke.mybinder.org/'
+
+# For more on running Bokeh within Juypyter see
+# https://docs.bokeh.org/en/latest/docs/user_guide/jupyter.html
+# Where the function is defined as `remote_jupyter_proxy_url`.
+def remote_jupyter_proxy_url_callback(port):
     """
     Callable to configure Bokeh's show method when a proxy must be
     configured.
