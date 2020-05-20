@@ -6,7 +6,7 @@ import urllib
 # This variable is defined here so that it is available to the
 # remote_jupyter_proxy_url_callback function. The caller does not
 # provide for a url param.
-default_url = 'https://hub.gke.mybinder.org/'
+default_jupyter_url = 'https://hub.gke.mybinder.org/'
 
 # For more on running Bokeh within Juypyter see
 # https://docs.bokeh.org/en/latest/docs/user_guide/jupyter.html
@@ -22,7 +22,7 @@ def remote_jupyter_proxy_url_callback(port):
     try:
         base_url = os.environ['EXTERNAL_URL']
     except KeyError:
-        base_url = default_url
+        base_url = default_jupyter_url
     host = urllib.parse.urlparse(base_url).netloc
 
     # If port is None we're asking for the URL origin
